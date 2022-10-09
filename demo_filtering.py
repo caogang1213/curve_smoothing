@@ -483,7 +483,7 @@ class MainWindow(QMainWindow):
                 t2 = self.loadedDataFrame['t2'][ind]
                 t3 = self.loadedDataFrame['t3'][ind]
                 deltaz = self.loadedDataFrame['deltaz'][ind]
-                self.datalistPlaintext.appendPlainText('温度T1(°c):%.2f, 温度T2(°c):%.2f, 温度T3(°c):%.2f, 纵向补偿量(μm):%.2f' %(t1, t2, t3, deltaz))
+                self.datalistPlaintext.appendPlainText('温度T1(℃):%.2f, 温度T2(℃):%.2f, 温度T3(℃):%.2f, 纵向补偿量(μm):%.2f' %(t1, t2, t3, deltaz))
             self.filtering()
 
 def filtering_lowpass(data, cutoff, scalar):
