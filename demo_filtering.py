@@ -509,7 +509,7 @@ def filtering_convolve(data, kernelsize, convolvemode):
 
 ### read temperature data(txt file) as a list
 def read_textfiledata_into_list(filepath):
-    fdata = np.loadtxt(filepath, dtype=str, delimiter=',',usecols=(0,1,2,5))
+    fdata = np.loadtxt(filepath, dtype=str, delimiter=',',usecols=(0,1,2,5), encoding='utf-8')
     merge_float_data = []
     for strdata in fdata:
         merge_float_data.append(convertarr_str_to_float(strdata))
