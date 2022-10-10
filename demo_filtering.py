@@ -401,7 +401,15 @@ class MainWindow(QMainWindow):
                 filtered_data =  filtering_savgol(unfiltered_data, windowlength, polyorder)
             elif self.convolveChecklist.isChecked() == True:
                 kernelsize = int(self.kernelsizeSpinbox.value())
-                convolvemode = self.convolvemodeCombobox.currentText()
+                # convolvemode = self.convolvemodeCombobox.currentText()
+                if self.convolvemodeCombobox.currentText() == '等长':
+                    convolvemode = 'same'
+                elif self.convolvemodeCombobox.currentText() == '全长':
+                    convolvemode = 'full'
+                elif self.convolvemodeCombobox.currentText() == '有效':
+                    convolvemode = 'valid'
+                else:
+                    convolvemode = 'same'
                 filtered_data =  filtering_convolve(unfiltered_data, kernelsize, convolvemode)
             elif self.lowpassChecklist.isChecked() == True:
                 cutoff = float(self.cutoffSpinbox.value())
@@ -419,10 +427,11 @@ class MainWindow(QMainWindow):
         self.uniCanvas.draw()
 
     def plot_regression(self, unfiltered_data, filtered_data):
-        xx = range(0, len(unfiltered_data))
         ### regression
         self.axRegression.clear()
+        xx = range(0, len(unfiltered_data))
         self.axRegression.plot(xx, unfiltered_data, 'g:', label='Before filtering')
+        xx = range(0, len(filtered_data))
         self.axRegression.plot(xx, filtered_data, 'b-', label='After filtering')
         self.axRegression.set_xlabel('Samples', fontsize=8)
         self.axRegression.set_title('%s (Curve Smoothing/Noise Reduction using <%s>)'%(self.selected_column,self.algorithm), fontsize=8)
@@ -473,6 +482,7 @@ class MainWindow(QMainWindow):
         if self.filename is not None:
             self.datalistPlaintext.clear()
             self.loadedDataFrame = pd.DataFrame(read_textfiledata_into_list(self.filename), columns=['t1','t2','t3','deltaz'])
+            
             self.populate_datalist_into_plaintext()
             self.filtering()
 
